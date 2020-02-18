@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { finalize } from "rxjs/operators";
 
 import { GroceryService } from "../grocery.service";
@@ -31,5 +31,9 @@ export class MainComponent implements OnInit {
           this.error = true;
         }
       );
+  }
+
+  addedItem(item:Product) {
+    this.dataStore.addToBasket(item);
   }
 }

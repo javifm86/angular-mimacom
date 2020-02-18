@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataStoreService } from '../data-store.service';
+import { Product } from "../models/product";
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  basket: Product[];
+
+  constructor(private dataStore:DataStoreService) { }
 
   ngOnInit(): void {
+    this.basket = [...this.dataStore.getBasket()];
+    console.warn(this.basket);
   }
 
 }

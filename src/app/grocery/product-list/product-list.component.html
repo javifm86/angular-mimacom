@@ -10,6 +10,7 @@
       [price]="item.price"
       [description]="item.productDescription"
       [favorite]="item.favorite === 1"
+      (added)="addPressed(item);"
       ></app-product-card>
     </div>
   </ng-container>

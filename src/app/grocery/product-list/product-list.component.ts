@@ -3,7 +3,9 @@ import {
   OnInit,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { Product } from "../models/product";
 
@@ -13,18 +15,23 @@ import { Product } from "../models/product";
   styleUrls: ["./product-list.component.scss"]
 })
 export class ProductListComponent implements OnInit, OnChanges {
-  // Input with file info
   @Input() products: Product[];
+  @Output() addedProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
   constructor() {}
 
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.products) {
-      console.warn(changes.products);
-      console.log(this.products);
-      return;
-    }
+    // if (changes.products) {
+    //   console.warn(changes.products);
+    //   console.log(this.products);
+    //   return;
+    // }
   }
+
+  addPressed(item:Product) {
+    this.addedProduct.emit(item);
+  }
+
 }
