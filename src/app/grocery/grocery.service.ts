@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from 'rxjs';
 
+import { Product } from './models/product';
+
 const GET_GROCERY = "http://localhost:3000/grocery";
 
 @Injectable({
@@ -10,7 +12,7 @@ const GET_GROCERY = "http://localhost:3000/grocery";
 export class GroceryService {
   constructor(private http: HttpClient) {}
 
-  get(): Observable<any> {
-    return this.http.get(GET_GROCERY);
+  get(): Observable<Product[]> {
+    return this.http.get<Product[]>(GET_GROCERY);
   }
 }

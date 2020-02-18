@@ -1,20 +1,20 @@
 <h1 class="text-4xl sm:text-5xl font-bold font-serif leading-tight mb-4 text-center">Product list</h1>
 
-<div class="flex flex-wrap -mx-2 mb-8">
-
-  <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
-    <app-product-card></app-product-card>
-  </div>
-
-  <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
-    <app-product-card></app-product-card>
-  </div>
-
-  <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
-    <app-product-card></app-product-card>
-  </div>
-  <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
-    <app-product-card></app-product-card>
-  </div>
-
+<div *ngIf="products != null && products.length > 0; else templateEmpty" class="flex flex-wrap -mx-2 mb-8">
+  <ng-container *ngFor="let item of products">
+    <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
+      <app-product-card
+      [img]="item.image_url"
+      [stock]="item.stock"
+      [name]="item.productName"
+      [price]="item.price"
+      [description]="item.productDescription"
+      [favorite]="item.favorite === 1"
+      ></app-product-card>
+    </div>
+  </ng-container>
 </div>
+
+<ng-template #templateEmpty>
+  <p>No hay resultados</p>
+</ng-template>

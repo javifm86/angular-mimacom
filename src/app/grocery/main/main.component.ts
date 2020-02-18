@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { GroceryService } from "../grocery.service";
 import { finalize } from "rxjs/operators";
+
+import { GroceryService } from "../grocery.service";
+import { DataStoreService } from "../data-store.service";
+import { Product } from "../models/product";
 
 @Component({
   selector: "app-main",
@@ -8,17 +11,25 @@ import { finalize } from "rxjs/operators";
   styleUrls: ["./main.component.scss"]
 })
 export class MainComponent implements OnInit {
-  constructor(private groceryService: GroceryService) {}
+  loading = true;
+  error = false;
+  currentPage = 0;
+  products : Product[];
+
+  constructor(private groceryService: GroceryService, private dataStore: DataStoreService) {}
 
   ngOnInit(): void {
     this.groceryService
       .get()
-      .pipe(finalize(() => {}))
+      .pipe(finalize(() => this.loading = false))
       .subscribe(
-        (data: any) => {
-          console.warn(data);
+        (data: Product[]) => {
+          this.dataStore.setProducts(data);
+          this.products = this.dataStore.getProductsByPage(this.currentPage, 8);
         },
-        (error: any) => {}
+        (error: any) => {
+          this.error = true;
+        }
       );
   }
 }
