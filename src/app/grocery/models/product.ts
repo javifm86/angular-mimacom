@@ -6,4 +6,5 @@ export interface Product {
   price: number;
   productDescription: string;
   favorite: number;
+  numItems?: number;
 }

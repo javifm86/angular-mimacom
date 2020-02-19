@@ -34,6 +34,6 @@ export class MainComponent implements OnInit {
   }
 
   addedItem(item:Product) {
-    this.dataStore.addToBasket(item);
+    this.dataStore.addToBasket(Object.assign({},item));
   }
 }

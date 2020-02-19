@@ -1,3 +1,20 @@
 <h2 class="text-center font-bold text-2xl mb-2">Cart</h2>
 
-<app-product-card-basket></app-product-card-basket>
+<div *ngIf="basket != null && basket.length > 0; else templateEmpty" class="flex flex-wrap -mx-2 mb-8">
+  <ng-container *ngFor="let item of basket">
+    <div class="w-full px-4 mb-8">
+      <app-product-card-basket
+      [img]="item.image_url"
+      [stock]="item.stock"
+      [name]="item.productName"
+      [numItems]="item.numItems"
+      [price]="item.price"
+      [description]="item.productDescription"
+      [favorite]="item.favorite === 1"></app-product-card-basket>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #templateEmpty>
+  <p>No hay resultados</p>
+</ng-template>
