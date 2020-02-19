@@ -23,4 +23,9 @@ export class CartComponent implements OnInit {
   private updateBasket():void {
     this.basket = this.dataStore.getBasket();
   }
+
+  updatedNumItems(val, product: Product) {
+    product.numItems = val;
+    console.warn('Nuevo valor: ', val);
+  }
 }

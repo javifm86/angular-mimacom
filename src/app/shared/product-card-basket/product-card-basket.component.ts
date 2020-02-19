@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ export class ProductCardBasketComponent implements OnInit {
   @Input() numItems: number;
   @Input() description: string;
   @Input() favorite: boolean;
+  @Output() numItemsUpdated: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -26,7 +27,7 @@ export class ProductCardBasketComponent implements OnInit {
   }
 
   updatedNumItems(val): void {
-    console.warn(val);
+    this.numItemsUpdated.emit(val);
   }
 
 }

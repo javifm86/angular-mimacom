@@ -10,7 +10,8 @@
       [numItems]="item.numItems"
       [price]="item.price"
       [description]="item.productDescription"
-      [favorite]="item.favorite === 1"></app-product-card-basket>
+      [favorite]="item.favorite === 1"
+      (numItemsUpdated)="updatedNumItems($event, item);"></app-product-card-basket>
     </div>
   </ng-container>
 </div>

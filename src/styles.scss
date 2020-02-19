@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+// Forms validation
+.ng-touched.ng-invalid:not(form):not(.ignore-validation-form) {
+  border: 1px solid #a31e34;
+    &:focus {
+        border-color: #a31e34;
+        box-shadow: 0 0 0 0.2rem rgba(163, 30, 52, 0.25);
+    }
+}/* You can add global styles to this file, and also import other style files */
