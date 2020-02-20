@@ -1,33 +1,61 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter
+} from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+export interface ItemUpdated {
+  val: number;
+  error: boolean;
+}
 
 @Component({
-  selector: 'app-product-card-basket',
-  templateUrl: './product-card-basket.component.html',
-  styleUrls: ['./product-card-basket.component.scss']
+  selector: "app-product-card-basket",
+  templateUrl: "./product-card-basket.component.html",
+  styleUrls: ["./product-card-basket.component.scss"]
 })
 export class ProductCardBasketComponent implements OnInit {
-
-  @ViewChild('weightForm', { static: false })
-  weightForm: NgForm;
+  @ViewChild("productForm", { static: false })
+  productForm: NgForm;
 
   @Input() img: string;
   @Input() stock: number;
   @Input() name: string;
   @Input() price: number;
-  @Input() numItems: number;
+  @Input() numItems: string;
   @Input() description: string;
   @Input() favorite: boolean;
-  @Output() numItemsUpdated: EventEmitter<number> = new EventEmitter<number>();
+  @Output() numItemsUpdated: EventEmitter<ItemUpdated> = new EventEmitter<ItemUpdated>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     console.warn(this.numItems);
   }
 
   updatedNumItems(val): void {
-    this.numItemsUpdated.emit(val);
+    this.numItemsUpdated.emit({
+      val: val,
+      error: !this.productForm.valid
+    });
   }
 
+  substract(): void {
+    this.modifyNumItems(-1);
+  }
+
+  add(): void {
+    this.modifyNumItems(1);
+  }
+
+  private modifyNumItems(num:number): void {
+    if(Number.isInteger(parseFloat(this.numItems)) ){
+      this.numItems = String(Number(this.numItems) + num);
+      this.updatedNumItems(this.numItems);
+    }
+  }
 }

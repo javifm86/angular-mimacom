@@ -1,10 +1,10 @@
-<div class="min-h-screen flex">
-  <div class="w-9/12 p-8">
+<div class="flex">
+  <div class="w-9/12 p-8 h-screen overflow-y-auto">
     <app-product-list
     [products]="products"
     (addedProduct)="addedItem($event)"></app-product-list>
   </div>
-  <div class="w-3/12 bg-gray-200 p-8">
+  <div class="w-3/12 bg-gray-200 p-8 h-screen overflow-y-auto">
     <app-cart></app-cart>
   </div>
 </div>

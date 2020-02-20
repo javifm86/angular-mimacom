@@ -8,19 +8,16 @@ import { NG_VALIDATORS, AbstractControl, Validator } from "@angular/forms";
   ]
 })
 export class ValidateStockDirective implements Validator {
-  @Input('appValidateStock') stock: any;
+  @Input("appValidateStock") stock: any;
 
-  constructor() {
-    console.log('Stock: ',this.stock);
-  }
+  constructor() {}
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    console.log('Stock: ',this.stock);
     const val = Number(control.value);
-    if (!Number.isInteger(val) || val > this.stock) {
+
+    if (!Number.isInteger(val) || val > this.stock || val < 0) {
       return {
-        validateStock:
-          "Error en la validación"
+        validateStock: "Error en la validación"
       };
     }
     return null;
