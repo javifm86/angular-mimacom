@@ -33,17 +33,22 @@ export class CartComponent implements OnInit {
   }
 
   updatedNumItems(item: ItemUpdated, product: ProductBasket) {
-    product.numItems = item.val;
+    // TODO: update total in data store basket service ??
+    product.numItems = Number(item.val);
     if(item.error){
       this.error = true;
       this.total = 0;
     }
     else {
-      this.updateTotal();
+      this.error = false;
+      if(item.val === '0'){
+        this.dataStore.removeFromBasket(Object.assign({}, product));
+      }
+      else {
+        this.updateTotal();
+      }
     }
 
-
-    // console.warn('Nuevo valor: ', val);
   }
 
   private updateTotal(): void {

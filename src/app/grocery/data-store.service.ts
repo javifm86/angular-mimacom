@@ -34,24 +34,21 @@ export class DataStoreService {
   }
 
   addToBasket(item: Product): void {
-    // const itemIndex = this.products.findIndex(el => el.id === item.id);
-    // const newItem = Object.assign(
-    //   {},
-    //   {
-    //     ...this.products[itemIndex],
-    //     stock: this.products[itemIndex].stock - 1,
-    //     productName: "bbbbbb"
-    //   }
-    // );
-    // this.products = Object.assign([...this.products], { [itemIndex]: newItem });
 
     const elemInBasket = this.basket.find(elem => elem.id === item.id);
     if (elemInBasket == null) {
       item.numItems = 1;
-      this.basket.push(item);
+      this.basket.push(Object.assign({}, item));
       sessionStorage.setItem(this.KEY_BASKET, JSON.stringify(this.basket));
       this.basketUpdatedSource.next( Object.assign({}, item) );
     }
+  }
+
+  removeFromBasket(item: Product): void {
+    this.basket = this.basket.filter((elem) => elem.id !== item.id);
+    sessionStorage.setItem(this.KEY_BASKET, JSON.stringify(this.basket));
+    this.basketUpdatedSource.next( Object.assign({}, item) );
+
   }
 
   private getBasketFromLocal(): Product[] {

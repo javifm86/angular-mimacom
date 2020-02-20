@@ -11,7 +11,7 @@ import {
 import { FormControl, FormGroup, NgForm } from "@angular/forms";
 
 export interface ItemUpdated {
-  val: number;
+  val: string;
   error: boolean;
 }
 
