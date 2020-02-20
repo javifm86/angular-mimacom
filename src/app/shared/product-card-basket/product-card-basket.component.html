@@ -5,7 +5,7 @@
     <div>{{price | currency}}</div>
     <div>{{stock}} left</div>
     <div>
-      <form #productForm="ngForm">
+      <form #addItemForm="ngForm" [formGroup]="addForm">
         <div class="flex items-center py-2">
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
@@ -16,9 +16,9 @@
           <input
             required
             [appValidateStock]="stock"
-            [(ngModel)]="numItems"
+            formControlName="itemsSelected"
+            id="itemsSelected"
             (change)="updatedNumItems($event.target.value)"
-            name="itemsSelected"
             class="appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
             type="text">
           <button

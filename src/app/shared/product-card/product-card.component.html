@@ -1,4 +1,12 @@
-<div class="max-w-sm rounded overflow-hidden shadow-lg h-full">
+<div class="max-w-sm rounded overflow-hidden shadow-lg h-full relative">
+  <svg
+    class="feather feather-heart absolute right-0 mr-2 mt-2 fill-current"
+    (click)="addFav();"
+    [class.text-red-600]="favorite"
+    [class.text-white]="!favorite"
+    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+  </svg>
   <img class="w-full" [src]="img" [alt]="description">
   <div class="px-6 py-4">
     <div class="font-bold text-xl mb-2 text-gray-700">{{name}}</div>

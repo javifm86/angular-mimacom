@@ -13,6 +13,7 @@ export class ProductCardComponent implements OnInit {
   @Input() description: string;
   @Input() favorite: boolean;
   @Output() added: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() addedToFav: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() {}
 
@@ -20,5 +21,9 @@ export class ProductCardComponent implements OnInit {
 
   add(): void {
     this.added.emit(true);
+  }
+
+  addFav(): void {
+    this.addedToFav.emit(!this.favorite);
   }
 }

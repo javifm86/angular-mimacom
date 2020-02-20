@@ -8,6 +8,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import { Product } from "../models/product";
+import { GroceryService } from "../grocery.service";
 
 @Component({
   selector: "app-product-list",
@@ -18,7 +19,7 @@ export class ProductListComponent implements OnInit, OnChanges {
   @Input() products: Product[];
   @Output() addedProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
-  constructor() {}
+  constructor(private groceryService: GroceryService) {}
 
   ngOnInit(): void {}
 
@@ -32,6 +33,25 @@ export class ProductListComponent implements OnInit, OnChanges {
 
   addPressed(item:Product) {
     this.addedProduct.emit(item);
+  }
+
+  addedToFav(addToFav:boolean, item:Product) {
+    item.favorite = addToFav ? 1 : 0;
+
+    const params = Object.assign({}, {
+      id: item.id,
+      favorite: item.favorite
+    });
+
+    this.groceryService.updateProduct(params).subscribe(
+      (data: Product) => {
+        item.favorite = data.favorite;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+
   }
 
 }

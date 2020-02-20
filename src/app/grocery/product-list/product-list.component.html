@@ -9,8 +9,9 @@
       [name]="item.productName"
       [price]="item.price"
       [description]="item.productDescription"
-      [favorite]="item.favorite === 1"
+      [favorite]="item.favorite === 1 || item.favorite === '1'"
       (added)="addPressed(item);"
+      (addedToFav)="addedToFav($event, item);"
       ></app-product-card>
     </div>
   </ng-container>

@@ -14,14 +14,17 @@ export class MainComponent implements OnInit {
   loading = true;
   error = false;
   currentPage = 0;
-  products : Product[];
+  products: Product[];
 
-  constructor(private groceryService: GroceryService, private dataStore: DataStoreService) {}
+  constructor(
+    private groceryService: GroceryService,
+    private dataStore: DataStoreService
+  ) {}
 
   ngOnInit(): void {
     this.groceryService
       .get()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (data: Product[]) => {
           this.dataStore.setProducts(data);
@@ -33,7 +36,7 @@ export class MainComponent implements OnInit {
       );
   }
 
-  addedItem(item:Product) {
-    this.dataStore.addToBasket(Object.assign({},item));
+  addedItem(item: Product) {
+    this.dataStore.addToBasket(Object.assign({}, item));
   }
 }

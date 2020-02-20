@@ -4,9 +4,11 @@ import {
   Input,
   ViewChild,
   Output,
-  EventEmitter
+  EventEmitter,
+  SimpleChanges,
+  OnChanges
 } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { FormControl, FormGroup, NgForm } from "@angular/forms";
 
 export interface ItemUpdated {
   val: number;
@@ -18,9 +20,11 @@ export interface ItemUpdated {
   templateUrl: "./product-card-basket.component.html",
   styleUrls: ["./product-card-basket.component.scss"]
 })
-export class ProductCardBasketComponent implements OnInit {
-  @ViewChild("productForm", { static: false })
-  productForm: NgForm;
+export class ProductCardBasketComponent implements OnInit, OnChanges {
+
+  addForm: FormGroup = new FormGroup({
+    itemsSelected: new FormControl()
+  });
 
   @Input() img: string;
   @Input() stock: number;
@@ -29,18 +33,24 @@ export class ProductCardBasketComponent implements OnInit {
   @Input() numItems: string;
   @Input() description: string;
   @Input() favorite: boolean;
-  @Output() numItemsUpdated: EventEmitter<ItemUpdated> = new EventEmitter<ItemUpdated>();
+  @Output() numItemsUpdated: EventEmitter<ItemUpdated> = new EventEmitter<
+    ItemUpdated
+  >();
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.warn(this.numItems);
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.numItems) {
+      this.addForm.get('itemsSelected').setValue(this.numItems);
+    }
   }
 
-  updatedNumItems(val): void {
+  updatedNumItems(val): void {;
     this.numItemsUpdated.emit({
       val: val,
-      error: !this.productForm.valid
+      error: !this.addForm.valid
     });
   }
 
@@ -52,10 +62,16 @@ export class ProductCardBasketComponent implements OnInit {
     this.modifyNumItems(1);
   }
 
-  private modifyNumItems(num:number): void {
-    if(Number.isInteger(parseFloat(this.numItems)) ){
-      this.numItems = String(Number(this.numItems) + num);
-      this.updatedNumItems(this.numItems);
+  private modifyNumItems(num: number): void {
+
+    this.addForm.get('itemsSelected').markAsDirty();
+    this.addForm.get('itemsSelected').markAsTouched();
+
+    let currentVal = this.addForm.get('itemsSelected').value;
+    if (Number.isInteger(parseFloat(currentVal))) {
+      let result = String(Number(currentVal) + num);
+      this.addForm.get('itemsSelected').setValue(result);
+      this.updatedNumItems(result);
     }
   }
 }

@@ -33,13 +33,12 @@ export class CartComponent implements OnInit {
   }
 
   updatedNumItems(item: ItemUpdated, product: ProductBasket) {
+    product.numItems = item.val;
     if(item.error){
-      product.numItems = null;
       this.error = true;
       this.total = 0;
     }
     else {
-      product.numItems = item.val;
       this.updateTotal();
     }
 
