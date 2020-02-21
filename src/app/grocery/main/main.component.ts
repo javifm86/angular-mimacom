@@ -65,4 +65,20 @@ export class MainComponent implements OnInit {
     this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
     this.productListDom.nativeElement.scrollTop = 0;
   }
+
+  loadFavorites(): void {
+    this.groceryService
+      .getFavorites()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Product[]) => {
+          this.dataStore.setProducts(data);
+          this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+          this.initPagination();
+        },
+        (error: any) => {
+          this.error = true;
+        }
+      );
+  }
 }

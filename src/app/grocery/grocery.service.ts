@@ -26,6 +26,10 @@ export class GroceryService {
     return this.http.get<Product[]>(GET_GROCERY);
   }
 
+  getFavorites(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${GET_GROCERY}?favorite=1`);
+  }
+
   updateProduct(id:string, paramsObject: UpdateProduct): Observable<Product> {
     const params = new HttpParams({
       fromObject: {

@@ -1,5 +1,3 @@
-<h1 class="text-4xl sm:text-5xl font-bold font-serif leading-tight mb-4 text-center">Product list</h1>
-
 <div *ngIf="products != null && products.length > 0; else templateEmpty" class="flex flex-wrap -mx-2 mb-8">
   <ng-container *ngFor="let item of products">
     <div class="w-full sm:w-1/2 lg:w-1/4 px-4 mb-8">
