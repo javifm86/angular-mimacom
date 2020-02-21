@@ -14,9 +14,9 @@ import { GroceryModule } from './grocery/grocery.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     SharedModule,
-    GroceryModule
+    GroceryModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { finalize } from "rxjs/operators";
 
 import { GroceryService } from "../grocery.service";
@@ -16,19 +16,38 @@ export class MainComponent implements OnInit {
   currentPage = 0;
   products: Product[];
 
+  private totalProducts : number;
+  lastPage : number;
+  private ITEMS_PER_PAGE = 8;
+
+  @ViewChild('productList', { static: false })
+  productListDom: ElementRef;
+
   constructor(
     private groceryService: GroceryService,
     private dataStore: DataStoreService
   ) {}
 
   ngOnInit(): void {
+    this.getData();
+    this.dataStore.paymentReceived$.subscribe((updated) => {
+      this.getData();
+    });
+  }
+
+  addedItem(item: Product) {
+    this.dataStore.addToBasket(Object.assign({}, item));
+  }
+
+  private getData(): void {
     this.groceryService
       .get()
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (data: Product[]) => {
           this.dataStore.setProducts(data);
-          this.products = this.dataStore.getProductsByPage(this.currentPage, 8);
+          this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+          this.initPagination();
         },
         (error: any) => {
           this.error = true;
@@ -36,7 +55,14 @@ export class MainComponent implements OnInit {
       );
   }
 
-  addedItem(item: Product) {
-    this.dataStore.addToBasket(Object.assign({}, item));
+  private initPagination(): void {
+    this.totalProducts = this.dataStore.getTotalProducts();
+    this.lastPage = Math.ceil((this.totalProducts / this.ITEMS_PER_PAGE)) - 1;
+  }
+
+  loadPage(page: number): void {
+    this.currentPage = page;
+    this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+    this.productListDom.nativeElement.scrollTop = 0;
   }
 }

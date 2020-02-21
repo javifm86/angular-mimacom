@@ -1,8 +1,18 @@
 <div class="flex">
-  <div class="w-9/12 p-8 h-screen overflow-y-auto">
+  <div class="w-9/12 p-8 h-screen overflow-y-auto" #productList>
     <app-product-list
     [products]="products"
     (addedProduct)="addedItem($event)"></app-product-list>
+
+    <div class="flex items-center justify-center text-xl text-gray-700">
+        <button *ngIf="currentPage > 0" (click)="loadPage(currentPage-1);" class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Anterior">
+            &laquo; Anterior
+        </button>
+        <button *ngIf="currentPage !== lastPage" (click)="loadPage(currentPage+1);" class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Anterior">
+          Siguiente &raquo;
+        </button>
+    </div>
+
   </div>
   <div class="w-3/12 bg-gray-200 p-8 h-screen overflow-y-auto">
     <app-cart></app-cart>

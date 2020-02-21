@@ -7,6 +7,15 @@ import { Product } from "./models/product";
 const GET_GROCERY = "http://localhost:3000/grocery";
 const PATCH_GROCERY = "http://localhost:3000/grocery/";
 
+interface UpdateProduct {
+  image?: string;
+  stock?: string;
+  name?: string;
+  price?: string;
+  description?: string;
+  favorite?: string;
+}
+
 @Injectable({
   providedIn: "root"
 })
@@ -17,13 +26,13 @@ export class GroceryService {
     return this.http.get<Product[]>(GET_GROCERY);
   }
 
-  updateProduct(paramsObject): Observable<Product> {
+  updateProduct(id:string, paramsObject: UpdateProduct): Observable<Product> {
     const params = new HttpParams({
       fromObject: {
         ...paramsObject
       }
     });
-    return this.http.patch<Product>(`${PATCH_GROCERY}${paramsObject.id}`, params);
+    return this.http.patch<Product>(`${PATCH_GROCERY}${id}`, params);
   }
 
 }

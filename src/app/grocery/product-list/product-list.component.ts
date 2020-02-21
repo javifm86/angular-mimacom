@@ -39,11 +39,10 @@ export class ProductListComponent implements OnInit, OnChanges {
     item.favorite = addToFav ? 1 : 0;
 
     const params = Object.assign({}, {
-      id: item.id,
-      favorite: item.favorite
+      favorite: String(item.favorite)
     });
 
-    this.groceryService.updateProduct(params).subscribe(
+    this.groceryService.updateProduct(item.id, params).subscribe(
       (data: Product) => {
         item.favorite = data.favorite;
       },
