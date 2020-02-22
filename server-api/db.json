@@ -25,7 +25,7 @@
       "productName": "Awesome Cotton Soap",
       "price": 66,
       "productDescription": "Molestias sunt quia omnis reprehenderit quia. Iste quia et similique voluptate. Et sit molestias.",
-      "favorite": 0
+      "favorite": "0"
     },
     {
       "id": "c34287bf-9cb7-40a7-ad07-6534e45a6868",
@@ -34,7 +34,7 @@
       "productName": "Gorgeous Frozen Chair",
       "price": 47,
       "productDescription": "Harum modi sunt. Voluptatem ut molestiae consequatur. Ea omnis architecto laboriosam accusantium reiciendis corporis exercitationem ad dolor. Fugit autem placeat voluptas sint aut aliquam sed. Totam fuga nesciunt rerum voluptatibus. Voluptatibus voluptates vel ut et temporibus perferendis laboriosam accusamus.",
-      "favorite": 0
+      "favorite": "0"
     },
     {
       "id": "41fb4f07-22fd-4ef6-b23c-1ac022b57d11",
@@ -52,7 +52,7 @@
       "productName": "Fantastic Wooden Sausages",
       "price": 1,
       "productDescription": "Ea qui et. Minus minima omnis. Nisi temporibus quam vel doloribus tempore ut possimus repellendus minus. Aut et repudiandae et dolorum ut consectetur. Qui laborum tenetur corporis odit architecto. Rerum neque odit.",
-      "favorite": 0
+      "favorite": "0"
     },
     {
       "id": "1db18081-575b-47b2-b0d8-395314a6b327",
@@ -8998,7 +8998,7 @@
       "productName": "Refined Cotton Pants",
       "price": 39,
       "productDescription": "Dolore quia et aliquid aut quia suscipit optio molestiae. Dolor magnam minima eos. Eos laborum sit dolores.",
-      "favorite": "1"
+      "favorite": "0"
     }
   ]
 }

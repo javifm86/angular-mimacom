@@ -28,13 +28,13 @@
     <ng-container *ngIf="!loading; else templateLoading">
       <app-product-list [products]="products" (addedProduct)="addedItem($event)"></app-product-list>
       <div *ngIf="products.length > 0" class="flex items-center justify-center text-xl text-gray-700">
-        <button *ngIf="currentPage > 0" (click)="loadPage(currentPage-1);" class="hover:bg-gray-300 px-3 py-2 rounded"
-          aria-label="Anterior">
-          &laquo; Anterior
+        <button *ngIf="currentPage > 0" (click)="loadPage(currentPage-1);" class="page-button bg-gray-300 px-3 py-2 rounded hover:bg-gray-400 mr-4"
+          aria-label="Previous">
+          &laquo; Previous
         </button>
         <button *ngIf="currentPage !== lastPage" (click)="loadPage(currentPage+1);"
-          class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Siguiente">
-          Siguiente &raquo;
+          class="page-button bg-gray-300 px-3 py-2 rounded hover:bg-gray-400" aria-label="Next">
+          Next &raquo;
         </button>
       </div>
     </ng-container>

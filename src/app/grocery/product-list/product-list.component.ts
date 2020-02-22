@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  Output,
-  EventEmitter
-} from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Product } from "../models/product";
 import { GroceryService } from "../grocery.service";
 
@@ -15,7 +7,7 @@ import { GroceryService } from "../grocery.service";
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"]
 })
-export class ProductListComponent implements OnInit, OnChanges {
+export class ProductListComponent implements OnInit {
   @Input() products: Product[];
   @Output() addedProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
@@ -23,24 +15,16 @@ export class ProductListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.products) {
-    //   console.warn(changes.products);
-    //   console.log(this.products);
-    //   return;
-    // }
+  addPressed(item: Product) {
+    this.addedProduct.emit(Object.assign({}, item));
   }
 
-  addPressed(item:Product) {
-    this.addedProduct.emit(item);
-  }
-
-  addedToFav(addToFav:boolean, item:Product) {
+  addedToFav(addToFav: boolean, item: Product) {
     item.favorite = addToFav ? 1 : 0;
 
-    const params = Object.assign({}, {
+    const params = {
       favorite: String(item.favorite)
-    });
+    };
 
     this.groceryService.updateProduct(item.id, params).subscribe(
       (data: Product) => {
@@ -50,7 +34,5 @@ export class ProductListComponent implements OnInit, OnChanges {
         console.error(error);
       }
     );
-
   }
-
 }
