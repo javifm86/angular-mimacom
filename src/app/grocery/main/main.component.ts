@@ -13,11 +13,12 @@ import { Product } from "../models/product";
 export class MainComponent implements OnInit {
   loading = true;
   error = false;
+  isFavoriteList = false;
   currentPage = 0;
   products: Product[];
 
-  private totalProducts : number;
-  lastPage : number;
+  private totalProducts: number;
+  lastPage: number;
   private ITEMS_PER_PAGE = 8;
 
   @ViewChild('productList', { static: false })
@@ -26,33 +27,17 @@ export class MainComponent implements OnInit {
   constructor(
     private groceryService: GroceryService,
     private dataStore: DataStoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.getData();
+    this.loadListProduct();
     this.dataStore.paymentReceived$.subscribe((updated) => {
-      this.getData();
+      this.loadListProduct();
     });
   }
 
   addedItem(item: Product) {
     this.dataStore.addToBasket(Object.assign({}, item));
-  }
-
-  private getData(): void {
-    this.groceryService
-      .get()
-      .pipe(finalize(() => (this.loading = false)))
-      .subscribe(
-        (data: Product[]) => {
-          this.dataStore.setProducts(data);
-          this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
-          this.initPagination();
-        },
-        (error: any) => {
-          this.error = true;
-        }
-      );
   }
 
   private initPagination(): void {
@@ -66,19 +51,41 @@ export class MainComponent implements OnInit {
     this.productListDom.nativeElement.scrollTop = 0;
   }
 
+  loadListProduct(): void {
+    this.currentPage = 0;
+    this.loading = true;
+    this.error = false;
+    this.isFavoriteList = false;
+    this.groceryService
+      .get()
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe(
+        (data: Product[]) => this.setViewData(data),
+        (error: any) => this.error = true
+      );
+  }
+
   loadFavorites(): void {
+    this.currentPage = 0;
+    this.loading = true;
+    this.error = false;
+    this.isFavoriteList = true;
     this.groceryService
       .getFavorites()
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
-        (data: Product[]) => {
-          this.dataStore.setProducts(data);
-          this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
-          this.initPagination();
-        },
-        (error: any) => {
-          this.error = true;
-        }
+        (data: Product[]) => this.setViewData(data),
+        (error: any) => this.error = true
       );
+  }
+
+  refresh(): void {
+    this.isFavoriteList ? this.loadFavorites() : this.loadListProduct();
+  }
+
+  private setViewData(data: Product[]): void {
+    this.dataStore.setProducts(data);
+    this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+    this.initPagination();
   }
 }

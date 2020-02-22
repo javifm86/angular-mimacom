@@ -1,33 +1,57 @@
 <div class="flex">
-  <div class="w-9/12 p-8 h-screen overflow-y-auto" #productList>
+  <section class="w-9/12 p-8 h-screen overflow-y-auto" #productList>
 
-    <div class="flex">
-      <span class="p-1 border bg-gray-200 rounded-md">
-        <button class="px-2 py-1 rounded" (click)="loadFavorites();">
-          <svg fill="none" viewBox="0 0 24 24" class="h-6 w-6 text-gray-600"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-width="2" stroke="currentColor"></path></svg>
-        </button>
-        <button class="px-2 py-1 bg-white rounded shadow">
-          <svg fill="none" viewBox="0 0 24 24" class="h-6 w-6 text-gray-600"><path d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" stroke-width="2" stroke="currentColor"></path></svg>
-        </button>
-      </span>
+    <div class="flex justify-between items-center py-3 border-b border-gray-200 mb-8">
+      <h1 class="text-3xl font-semibold text-gray-900 leading-tight">
+        {{ isFavoriteList ? 'Favorite' : 'Product' }} list
+      </h1>
+      <div class="flex">
+        <span class="p-1 border bg-gray-200 rounded-md">
+          <button class="px-2 py-1 bg-white rounded shadow" [class.bg-white]="!isFavoriteList" [class.border]="!isFavoriteList" (click)="loadListProduct();">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-6 w-6 text-gray-600 fill-current">
+              <path
+                d="M506 114H134a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h372a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm6 154v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zm0 160v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zM84 120V72c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12z" />
+            </svg>
+          </button>
+          <button class="px-2 py-1 rounded" [class.bg-white]="isFavoriteList" [class.border]="isFavoriteList" (click)="loadFavorites();">
+            <svg class="h-6 w-6 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+              </path>
+            </svg>
+          </button>
+        </span>
+      </div>
     </div>
-    <h1 class="text-4xl sm:text-5xl font-bold font-serif leading-tight mb-4 text-center">Product list</h1>
 
-    <app-product-list
-    [products]="products"
-    (addedProduct)="addedItem($event)"></app-product-list>
-
-    <div class="flex items-center justify-center text-xl text-gray-700">
-        <button *ngIf="currentPage > 0" (click)="loadPage(currentPage-1);" class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Anterior">
-            &laquo; Anterior
+    <ng-container *ngIf="!loading; else templateLoading">
+      <app-product-list [products]="products" (addedProduct)="addedItem($event)"></app-product-list>
+      <div *ngIf="products.length > 0" class="flex items-center justify-center text-xl text-gray-700">
+        <button *ngIf="currentPage > 0" (click)="loadPage(currentPage-1);" class="hover:bg-gray-300 px-3 py-2 rounded"
+          aria-label="Anterior">
+          &laquo; Anterior
         </button>
-        <button *ngIf="currentPage !== lastPage" (click)="loadPage(currentPage+1);" class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Anterior">
+        <button *ngIf="currentPage !== lastPage" (click)="loadPage(currentPage+1);"
+          class="hover:bg-gray-300 px-3 py-2 rounded" aria-label="Siguiente">
           Siguiente &raquo;
         </button>
+      </div>
+    </ng-container>
+
+    <ng-template #templateLoading>
+      <div class="h-64 flex justify-center items-center">
+        <app-loading></app-loading>
+      </div>
+    </ng-template>
+
+    <div *ngIf="error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+      <p class="font-bold">An error ocurred</p>
+      <p>Product list could not be loaded. Please <button (click)="refresh();" class="underline">try again later</button>.</p>
     </div>
 
-  </div>
-  <div class="w-3/12 bg-gray-200 p-8 h-screen overflow-y-auto">
+  </section>
+  <section class="w-3/12 bg-gray-200 p-8 h-screen overflow-y-auto">
     <app-cart></app-cart>
-  </div>
+  </section>
 </div>
