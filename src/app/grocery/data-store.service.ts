@@ -66,4 +66,8 @@ export class DataStoreService {
   notifyPayment(): void {
     this.paymentReceivedSource.next(true);
   }
+
+  isProductInBasket(id: string): boolean {
+    return this.basket.find(element => element.id ===id) != null;
+  }
 }

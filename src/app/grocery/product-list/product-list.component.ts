@@ -11,7 +11,9 @@ export class ProductListComponent implements OnInit {
   @Input() products: Product[];
   @Output() addedProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
-  constructor(private groceryService: GroceryService) {}
+  constructor(
+    private groceryService: GroceryService
+  ) {}
 
   ngOnInit(): void {}
 

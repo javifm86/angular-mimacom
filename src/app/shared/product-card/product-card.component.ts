@@ -12,6 +12,7 @@ export class ProductCardComponent implements OnInit {
   @Input() price: number;
   @Input() description: string;
   @Input() favorite: boolean;
+  @Input() inBasket: boolean;
   @Output() added: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() addedToFav: EventEmitter<boolean> = new EventEmitter<boolean>();
 

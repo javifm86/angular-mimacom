@@ -19,7 +19,7 @@ export class MainComponent implements OnInit {
 
   private totalProducts: number;
   lastPage: number;
-  private ITEMS_PER_PAGE = 8;
+  private ITEMS_PER_PAGE = 12;
 
   @ViewChild('productList', { static: false })
   productListDom: ElementRef;
@@ -38,6 +38,7 @@ export class MainComponent implements OnInit {
 
   addedItem(item: Product) {
     this.dataStore.addToBasket(Object.assign({}, item));
+    this.updateInBasketProducts();
   }
 
   private initPagination(): void {
@@ -47,7 +48,7 @@ export class MainComponent implements OnInit {
 
   loadPage(page: number): void {
     this.currentPage = page;
-    this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+    this.getProducts();
     this.productListDom.nativeElement.scrollTop = 0;
   }
 
@@ -85,7 +86,22 @@ export class MainComponent implements OnInit {
 
   private setViewData(data: Product[]): void {
     this.dataStore.setProducts(data);
-    this.products = this.dataStore.getProductsByPage(this.currentPage, this.ITEMS_PER_PAGE);
+    this.getProducts();
     this.initPagination();
   }
+
+  private getProducts(): void {
+     this.products = this.dataStore.getProductsByPage(
+       this.currentPage,
+       this.ITEMS_PER_PAGE
+     );
+     this.updateInBasketProducts();
+  }
+
+  private updateInBasketProducts(): void {
+    this.products.map(
+       elem => (elem.inBasket = this.dataStore.isProductInBasket(elem.id))
+     );
+  }
+
 }

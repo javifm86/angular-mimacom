@@ -6,7 +6,6 @@ import { ItemUpdated } from "../../shared/product-card-basket/product-card-baske
 import { forkJoin } from "rxjs";
 import { finalize } from "rxjs/operators";
 interface ProductBasket extends Product {
-  numItems?: number;
   error?: boolean;
 }
 
@@ -29,7 +28,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.updateBasket();
 
-    this.dataStore.basketUpdated$.subscribe((product: ProductBasket) => {
+    this.dataStore.basketUpdated$.subscribe((product: Product) => {
       this.updateBasket();
     });
   }
