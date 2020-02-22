@@ -47,7 +47,7 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
     }
   }
 
-  updatedNumItems(val): void {;
+  updatedNumItems(val): void {debugger;
     this.numItemsUpdated.emit({
       val: val,
       error: !this.addForm.valid

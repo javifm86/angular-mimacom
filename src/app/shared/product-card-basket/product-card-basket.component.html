@@ -1,14 +1,16 @@
-<div class="border border-gray-400 dark:border-gray-800 rounded shadow-md p-4 post-container bg-white flex">
-  <img [src]="img" [alt]="description" class="w-20 mr-4 flex-shrink-0" loading="lazy">
-  <div>
-    <div>{{name}}</div>
-    <div>{{price | currency}}</div>
-    <div>{{stock}} left</div>
-    <div>
+<div class="border border-gray-400 rounded-lg shadow-md p-4 bg-white flex items-start h-full">
+  <img [src]="img" [alt]="description" class="w-24 mr-4 flex-shrink-0 object-scale-down">
+  <div class="flex-grow">
+    <div class="font-bold text-base mb-1 text-gray-700">{{name}}</div>
+    <div class="flex justify-between items-center mb-2">
+      <div class="text-gray-800 font-bold mb-1">{{price | currency}}</div>
+      <div>{{stock}} left</div>
+    </div>
+    <div class="inline-block">
       <form #addItemForm="ngForm" [formGroup]="addForm">
-        <div class="flex items-center py-2">
+        <div class="flex items-center border">
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            class="hover:bg-gray-200 text-gray-800 font-bold py-1 px-2 w-8 text-center"
             type="button"
             (click)="substract();">
             -
@@ -17,12 +19,11 @@
             required
             [appValidateStock]="stock"
             formControlName="itemsSelected"
-            id="itemsSelected"
             (change)="updatedNumItems($event.target.value)"
-            class="appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            class="appearance-none bg-transparent border-none text-gray-700 py-1 px-2 leading-tight focus:outline-none w-12 text-center"
             type="text">
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+            class="hover:bg-gray-200 text-gray-800 font-bold py-1 px-2 w-8 text-center"
             type="button"
             (click)="add();">
             +

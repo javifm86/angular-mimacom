@@ -1,25 +1,21 @@
 <div class="flex">
-  <section class="w-full lg:w-9/12 p-8 h-screen overflow-y-auto" #productList>
+
+  <section class="flex-1 p-8 h-screen overflow-y-auto" #productList>
 
     <div class="flex justify-between items-center py-3 border-b border-gray-200 mb-8">
-      <h1 class="text-3xl font-semibold text-gray-900 leading-tight">
+      <h1 class="text-3xl font-semibold text-gray-900 leading-tight inline-flex items-center">
         {{ isFavoriteList ? 'Favorite' : 'Product' }} list
+        <a [routerLink]="['/cart']" class="inline lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 ml-4 fill-current" aria-hidden="true" viewBox="0 0 256 512"><path d="M24.707 38.101L4.908 57.899c-4.686 4.686-4.686 12.284 0 16.971L185.607 256 4.908 437.13c-4.686 4.686-4.686 12.284 0 16.971L24.707 473.9c4.686 4.686 12.284 4.686 16.971 0l209.414-209.414c4.686-4.686 4.686-12.284 0-16.971L41.678 38.101c-4.687-4.687-12.285-4.687-16.971 0z"/></svg>
+        </a>
       </h1>
       <div class="flex">
         <span class="p-1 border bg-gray-200 rounded-md">
           <button class="px-2 py-1 bg-white rounded shadow" [class.bg-white]="!isFavoriteList" [class.border]="!isFavoriteList" (click)="loadListProduct();">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-6 w-6 text-gray-600 fill-current">
-              <path
-                d="M506 114H134a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h372a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm6 154v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zm0 160v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zM84 120V72c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 fill-current" aria-hidden="true" viewBox="0 0 512 512"><path d="M506 114H134a6 6 0 0 1-6-6V84a6 6 0 0 1 6-6h372a6 6 0 0 1 6 6v24a6 6 0 0 1-6 6zm6 154v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zm0 160v-24a6 6 0 0 0-6-6H134a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6zM84 120V72c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12zm0 160v-48c0-6.627-5.373-12-12-12H24c-6.627 0-12 5.373-12 12v48c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12z" /></svg>
           </button>
           <button class="px-2 py-1 rounded" [class.bg-white]="isFavoriteList" [class.border]="isFavoriteList" (click)="loadFavorites();">
-            <svg class="h-6 w-6 text-gray-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 fill-current" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
           </button>
         </span>
       </div>
@@ -51,7 +47,7 @@
     </div>
 
   </section>
-  <section class="hidden lg:inline-flex lg:w-3/12 bg-gray-200 p-8 h-screen overflow-y-auto">
+  <section class="hidden lg:inline-flex right-0 bg-gray-200 h-screen overflow-y-auto cart-in-main">
     <app-cart></app-cart>
   </section>
 </div>

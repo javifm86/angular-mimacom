@@ -1,37 +1,43 @@
-<div class="product-container overflow-y-auto">
-  <h2 class="text-center font-bold text-2xl mb-2">Cart</h2>
-  <div *ngIf="basket != null && basket.length > 0; else templateEmpty" class="flex flex-wrap mb-8">
-    <ng-container *ngFor="let item of basket">
-      <div class="w-full mb-8">
-        <app-product-card-basket
-        [img]="item.image_url"
-        [stock]="item.stock"
-        [name]="item.productName"
-        [numItems]="item.numItems"
-        [price]="item.price"
-        [description]="item.productDescription"
-        [favorite]="item.favorite === 1"
-        (numItemsUpdated)="updatedNumItems($event, item);"></app-product-card-basket>
-      </div>
-    </ng-container>
+<div class="h-screen flex flex-col">
+  <div class="product-container overflow-y-auto px-4 py-8">
+    <h2 class="text-3xl font-semibold text-gray-900 leading-tight mb-2 flex justify-center items-center mt-4 mb-12">
+      <a [routerLink]="['/main']" class="inline lg:hidden mr-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-current" aria-hidden="true" viewBox="0 0 256 512"><path d="M231.293 473.899l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L70.393 256 251.092 74.87c4.686-4.686 4.686-12.284 0-16.971L231.293 38.1c-4.686-4.686-12.284-4.686-16.971 0L4.908 247.515c-4.686 4.686-4.686 12.284 0 16.971L214.322 473.9c4.687 4.686 12.285 4.686 16.971-.001z"/></svg>
+      </a>
+      <span class="mr-auto lg:mr-0">Cart</span>
+    </h2>
+    <div *ngIf="basket != null && basket.length > 0; else templateEmpty" class="flex flex-wrap mb-8">
+      <ng-container *ngFor="let item of basket">
+        <div class="w-full sm:w-1/2 lg:w-full mb-8 px-4">
+          <app-product-card-basket
+            [img]="item.image_url"
+            [stock]="item.stock"
+            [name]="item.productName"
+            [numItems]="item.numItems"
+            [price]="item.price"
+            [description]="item.productDescription"
+            [favorite]="item.favorite === 1"
+            (numItemsUpdated)="updatedNumItems($event, item);"></app-product-card-basket>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #templateEmpty>
+      <p>No hay resultados</p>
+    </ng-template>
   </div>
-  <ng-template #templateEmpty>
-    <p>No hay resultados</p>
-  </ng-template>
-</div>
 
-<div>
-  <div>
-    Total amount: {{total | currency}}
+  <div class="px-8 my-auto">
+    <div class="text-2xl font-semibold flex justify-around items-center mb-6">
+      <span>Total amount</span>
+      <span class="font-bold">{{total | currency}}</span>
+    </div>
+    <button
+      [disabled]="error"
+      [class.opacity-50]="error"
+      [class.cursor-not-allowed]="error"
+      (click)="makePayment();"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full text-center text-xl">
+      Make payment
+    </button>
   </div>
-  <button
-    [disabled]="error"
-    [class.opacity-50]="error"
-    [class.cursor-not-allowed]="error"
-    (click)="makePayment();"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Make payment
-  </button>
 </div>
-
-

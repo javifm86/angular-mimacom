@@ -40,6 +40,7 @@ export class CartComponent implements OnInit {
 
   updatedNumItems(item: ItemUpdated, product: ProductBasket) {
     product.numItems = Number(item.val);
+    product.numItems = 444444444; // TODO: Controlar error
     if (item.error) {
       this.error = true;
       this.total = 0;

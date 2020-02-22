@@ -34,6 +34,10 @@ export class MainComponent implements OnInit {
     this.dataStore.paymentReceived$.subscribe((updated) => {
       this.loadListProduct();
     });
+
+    this.dataStore.basketUpdated$.subscribe((product: Product) => {
+      this.updateInBasketProducts();
+    });
   }
 
   addedItem(item: Product) {
