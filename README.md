@@ -1,5 +1,5 @@
 # angular-challenge
-Angular + TailwindCSS application.
+Angular + TailwindCSS application. Run `npm install` to install dependencies.
 
 ## npm scripts
 - `npm start`: Launch `ng serve` for development mode.
