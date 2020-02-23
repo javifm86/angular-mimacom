@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { Product } from "./models/product";
-import { Subject } from "rxjs";
+import { Product } from './models/product';
+import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DataStoreService {
   // Observables source
@@ -17,7 +17,7 @@ export class DataStoreService {
 
   private products: Product[];
   private basket: Product[];
-  KEY_BASKET = "basket";
+  KEY_BASKET = 'basket';
 
   constructor() {
     this.basket = this.getBasketFromLocal();
@@ -68,6 +68,6 @@ export class DataStoreService {
   }
 
   isProductInBasket(id: string): boolean {
-    return this.basket.find(element => element.id ===id) != null;
+    return this.basket.find(element => element.id === id) != null;
   }
 }

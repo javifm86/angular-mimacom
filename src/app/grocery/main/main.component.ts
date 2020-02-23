@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { finalize } from "rxjs/operators";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { finalize } from 'rxjs/operators';
 
-import { GroceryService } from "../grocery.service";
-import { DataStoreService } from "../data-store.service";
-import { Product } from "../models/product";
+import { GroceryService } from '../grocery.service';
+import { DataStoreService } from '../data-store.service';
+import { Product } from '../models/product';
 
 @Component({
-  selector: "app-main",
-  templateUrl: "./main.component.html",
-  styleUrls: ["./main.component.scss"]
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
   loading = true;

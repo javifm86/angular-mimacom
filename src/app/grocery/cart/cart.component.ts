@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { DataStoreService } from "../data-store.service";
-import { GroceryService } from "../grocery.service";
-import { Product } from "../models/product";
-import { ItemUpdated } from "../../shared/product-card-basket/product-card-basket.component";
-import { forkJoin } from "rxjs";
-import { finalize } from "rxjs/operators";
+import { Component, OnInit } from '@angular/core';
+import { DataStoreService } from '../data-store.service';
+import { GroceryService } from '../grocery.service';
+import { Product } from '../models/product';
+import { ItemUpdated } from '../../shared/product-card-basket/product-card-basket.component';
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 interface ProductBasket extends Product {
   error?: boolean;
 }
 
 @Component({
-  selector: "app-cart",
-  templateUrl: "./cart.component.html",
-  styleUrls: ["./cart.component.scss"]
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
   basket: ProductBasket[];
@@ -39,14 +39,19 @@ export class CartComponent implements OnInit {
   }
 
   updatedNumItems(item: ItemUpdated, product: ProductBasket) {
-    product.numItems = Number(item.val);
-    product.numItems = 444444444; // TODO: Controlar error
+    const valItem = Number(item.val);
+    if (Number.isInteger(valItem)) {
+      product.numItems = valItem;
+    } else {
+      product.numItems = null;
+    }
+
     if (item.error) {
       this.error = true;
       this.total = 0;
     } else {
       this.error = false;
-      if (item.val === "0") {
+      if (item.val === '0') {
         this.dataStore.removeFromBasket(Object.assign({}, product));
       } else {
         this.updateTotal();

@@ -7,8 +7,8 @@ import {
   EventEmitter,
   SimpleChanges,
   OnChanges
-} from "@angular/core";
-import { FormControl, FormGroup, NgForm } from "@angular/forms";
+} from '@angular/core';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 export interface ItemUpdated {
   val: string;
@@ -16,9 +16,9 @@ export interface ItemUpdated {
 }
 
 @Component({
-  selector: "app-product-card-basket",
-  templateUrl: "./product-card-basket.component.html",
-  styleUrls: ["./product-card-basket.component.scss"]
+  selector: 'app-product-card-basket',
+  templateUrl: './product-card-basket.component.html',
+  styleUrls: ['./product-card-basket.component.scss']
 })
 export class ProductCardBasketComponent implements OnInit, OnChanges {
 
@@ -47,9 +47,9 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
     }
   }
 
-  updatedNumItems(val): void {debugger;
+  updatedNumItems(val): void {
     this.numItemsUpdated.emit({
-      val: val,
+      val,
       error: !this.addForm.valid
     });
   }
@@ -67,9 +67,9 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
     this.addForm.get('itemsSelected').markAsDirty();
     this.addForm.get('itemsSelected').markAsTouched();
 
-    let currentVal = this.addForm.get('itemsSelected').value;
+    const currentVal = this.addForm.get('itemsSelected').value;
     if (Number.isInteger(parseFloat(currentVal))) {
-      let result = String(Number(currentVal) + num);
+      const result = String(Number(currentVal) + num);
       this.addForm.get('itemsSelected').setValue(result);
       this.updatedNumItems(result);
     }

@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { Product } from "./models/product";
+import { Product } from './models/product';
 
-const GET_GROCERY = "http://localhost:3000/grocery";
-const PATCH_GROCERY = "http://localhost:3000/grocery/";
+const GET_GROCERY = 'http://localhost:3000/grocery';
+const PATCH_GROCERY = 'http://localhost:3000/grocery/';
 
 interface UpdateProduct {
   image?: string;
@@ -17,7 +17,7 @@ interface UpdateProduct {
 }
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class GroceryService {
   constructor(private http: HttpClient) {}
@@ -30,7 +30,7 @@ export class GroceryService {
     return this.http.get<Product[]>(`${GET_GROCERY}?favorite=1`);
   }
 
-  updateProduct(id:string, paramsObject: UpdateProduct): Observable<Product> {
+  updateProduct(id: string, paramsObject: UpdateProduct): Observable<Product> {
     const params = new HttpParams({
       fromObject: {
         ...paramsObject

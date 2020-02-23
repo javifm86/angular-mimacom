@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Product } from "../models/product";
-import { GroceryService } from "../grocery.service";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Product } from '../models/product';
+import { GroceryService } from '../grocery.service';
 
 @Component({
-  selector: "app-product-list",
-  templateUrl: "./product-list.component.html",
-  styleUrls: ["./product-list.component.scss"]
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
   @Input() products: Product[];

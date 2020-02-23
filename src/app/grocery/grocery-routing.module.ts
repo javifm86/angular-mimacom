@@ -1,16 +1,16 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { MainComponent } from "./main/main.component";
-import { CartComponent } from "./cart/cart.component";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { MainComponent } from './main/main.component';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   {
-    path: "main",
-    children: [{ path: "", component: MainComponent }]
+    path: 'main',
+    children: [{ path: '', component: MainComponent }]
   },
   {
-    path: "cart",
-    children: [{ path: "", component: CartComponent }]
+    path: 'cart',
+    children: [{ path: '', component: CartComponent }]
   }
 ];
 
