@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.messages.shift();
       }, 5000);
-      console.warn(msg, 'received!!');
     });
   }
 }
