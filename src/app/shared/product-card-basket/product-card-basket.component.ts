@@ -27,7 +27,7 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
   @Input() numItems: string;
   @Input() description: string;
   @Input() favorite: boolean;
-  @Input() disabled: boolean;
+  @Input() disable: boolean;
   @Output() numItemsUpdated: EventEmitter<ItemUpdated> = new EventEmitter<
     ItemUpdated
   >();
@@ -53,6 +53,14 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
         this.stockLeft = this.stock;
       } else {
         this.stockLeft = this.stock - numItems;
+      }
+    }
+
+    if (changes.disable) {
+      if (changes.disable.currentValue) {
+        this.addForm.get('itemsSelected').disable();
+      } else {
+        this.addForm.get('itemsSelected').enable();
       }
     }
   }

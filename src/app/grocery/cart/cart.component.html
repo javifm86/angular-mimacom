@@ -25,6 +25,7 @@
             [price]="item.price"
             [description]="item.productDescription"
             [favorite]="item.favorite === 1"
+            [disable]="submitting"
             (numItemsUpdated)="updatedNumItems($event, item);"></app-product-card-basket>
         </article>
       </ng-container>

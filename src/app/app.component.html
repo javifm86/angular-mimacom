@@ -1,8 +1,10 @@
 <main aria-live="polite">
     <router-outlet></router-outlet>
 </main>
-<div class="fixed bottom-0 right-0 mr-8 mb-4">
-    <div class="p-2 rounded-lg bg-red-200 text-red-700 sm:p-3 mb-4"> Hola Esto es un error </div>
-    <div class="p-2 rounded-lg bg-red-200 text-red-700 sm:p-3 mb-4"> Hola Esto es un error </div>
-    <div class="p-2 rounded-lg bg-red-200 text-red-700 sm:p-3 mb-4"> Hola Esto es un error </div>
+
+<!-- App notifications  TODO: Move to a module -->
+<div *ngIf="messages != null && messages.length > 0;" class="fixed bottom-0 right-0 mr-8 mb-4">
+    <ng-container *ngFor="let item of messages">
+        <div class="p-2 rounded bg-red-200 text-red-700 sm:p-3 mb-4">{{ item }}</div>
+    </ng-container>
 </div>

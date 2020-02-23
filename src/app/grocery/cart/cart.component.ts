@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
+import { NotifyService } from '../../shared/notify.service';
 import { DataStoreService } from '../data-store.service';
 import { GroceryService } from '../grocery.service';
 import { Product } from '../models/product';
@@ -26,7 +27,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private dataStore: DataStoreService,
-    private groceryService: GroceryService
+    private groceryService: GroceryService,
+    private notifyService: NotifyService
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +93,7 @@ export class CartComponent implements OnInit {
           this.dataStore.notifyPayment();
         },
         (error: any) => {
-          console.error(error);
+          this.notifyService.notify('Error processing payment');
         }
       );
   }

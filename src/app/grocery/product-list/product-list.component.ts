@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Product } from '../models/product';
 import { GroceryService } from '../grocery.service';
+import { NotifyService } from '../../shared/notify.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +13,10 @@ export class ProductListComponent implements OnInit {
   @Input() products: Product[];
   @Output() addedProduct: EventEmitter<Product> = new EventEmitter<Product>();
 
-  constructor(private groceryService: GroceryService) {}
+  constructor(
+    private groceryService: GroceryService,
+    private notifyService: NotifyService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -33,7 +37,8 @@ export class ProductListComponent implements OnInit {
         item.favorite = data.favorite;
       },
       (error: any) => {
-        console.error(error);
+        item.favorite = addToFav ? 0 : 1;
+        this.notifyService.notify('Error changing favorite state for the product');
       }
     );
   }
