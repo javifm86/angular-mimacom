@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+
 import { DataStoreService } from '../data-store.service';
 import { GroceryService } from '../grocery.service';
 import { Product } from '../models/product';
 import { ItemUpdated } from '../../shared/product-card-basket/product-card-basket.component';
-import { forkJoin } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+
 interface ProductBasket extends Product {
   error?: boolean;
 }
@@ -15,10 +17,12 @@ interface ProductBasket extends Product {
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  basket: ProductBasket[];
-  total = 0;
+  // Control variables
   error = false;
   submitting = false;
+
+  basket: ProductBasket[];
+  total = 0;
 
   constructor(
     private dataStore: DataStoreService,
@@ -38,34 +42,39 @@ export class CartComponent implements OnInit {
     this.updateTotal();
   }
 
+  // Invoked when aapp-product-card-basket component emits numItemsUpdated event
   updatedNumItems(item: ItemUpdated, product: ProductBasket) {
     const valItem = Number(item.val);
-    if (Number.isInteger(valItem)) {
+
+    if (item.val != null && Number.isInteger(valItem)) {
       product.numItems = valItem;
     } else {
       product.numItems = null;
     }
 
-    if (item.error) {
-      this.error = true;
-      this.total = 0;
-    } else {
-      this.error = false;
-      if (item.val === '0') {
+    product.error = item.error;
+    if (!item.error) {
+      if (item.val === 0) {
         this.dataStore.removeFromBasket(Object.assign({}, product));
       } else {
         this.updateTotal();
       }
     }
+    this.checkErrorInBasket();
   }
 
   private updateTotal(): void {
+    this.checkErrorInBasket();
+    if (this.error) {
+      return;
+    }
     this.total = this.basket.reduce((total, value) => {
       return (total += value.numItems * value.price);
     }, 0);
   }
 
-  makePayment() {
+  makePayment(): void {
+    this.submitting = true;
     const arrayPetitions = [];
     this.basket.forEach(elem => {
       arrayPetitions.push(
@@ -85,5 +94,12 @@ export class CartComponent implements OnInit {
           console.error(error);
         }
       );
+  }
+
+  private checkErrorInBasket(): void {
+    this.error = this.basket.find(element => element.error === true) != null;
+    if (this.error) {
+      this.total = 0;
+    }
   }
 }

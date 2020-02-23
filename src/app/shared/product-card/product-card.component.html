@@ -1,4 +1,6 @@
 <div class="rounded-lg overflow-hidden shadow-lg h-full relative flex flex-col">
+ 
+  <!-- Favorite icon-->
   <svg
     class="absolute right-0 mr-4 mt-4 fill-current z-10"
     (click)="addFav();"
@@ -7,13 +9,18 @@
     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
   </svg>
+
+  <!-- Product Image -->
   <div class="relative pb-56">
     <img class="absolute h-full w-full object-cover" [src]="img" [alt]="description">
   </div>
+
+  <!-- Product info -->
   <div class="pt-4 flex-grow flex flex-col">
     <div class="px-6 font-bold text-xl mb-2 text-gray-700">{{name}}</div>
     <div class="px-6 text-gray-800 font-bold text-xl mb-2">{{price | currency}}</div>
     <p class="px-6 text-gray-700 text-base mb-6 hidden md:inline-flex">{{description}}</p>
+
     <div class="flex justify-between items-center mt-auto bg-gray-100 py-4 px-6">
       <ng-container *ngIf="stock > 0; else templateSoldOut">
         <span>{{ stock }} left</span>
@@ -21,17 +28,21 @@
       <ng-template #templateSoldOut>
         <span class="text-red-700 py-2 font-bold">Sold out</span>
       </ng-template>
-      <button *ngIf="stock > 0"
+
+      <!-- Add/Added button -->
+      <button *ngIf="stock > 0;"
         class="text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out inline-flex items-center"
         [disabled]="inBasket"
         [ngClass]="{
           'bg-green-500 opacity-50 cursor-default': inBasket,
           'bg-blue-500 hover:bg-blue-700': !inBasket
         }"
-        (click)="add();">
+        (click)="add();"
+        type="button">
         <svg *ngIf="!inBasket" xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2 fill-current" aria-hidden="true" viewBox="0 0 384 512"><path d="M368 224H224V80c0-8.84-7.16-16-16-16h-32c-8.84 0-16 7.16-16 16v144H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h144v144c0 8.84 7.16 16 16 16h32c8.84 0 16-7.16 16-16V288h144c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16z"/></svg>
         {{inBasket ? 'Added' : 'Add'}}
       </button>
     </div>
+
   </div>
 </div>

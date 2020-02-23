@@ -17,7 +17,7 @@ export class ValidateStockDirective implements Validator {
 
     if (!Number.isInteger(val) || val > this.stock || val < 0) {
       return {
-        validateStock: 'Error en la validación'
+        validateStock: 'Validation error on items selected'
       };
     }
     return null;

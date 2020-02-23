@@ -2,16 +2,15 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
   Output,
   EventEmitter,
   SimpleChanges,
   OnChanges
 } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 export interface ItemUpdated {
-  val: string;
+  val: number;
   error: boolean;
 }
 
@@ -21,11 +20,6 @@ export interface ItemUpdated {
   styleUrls: ['./product-card-basket.component.scss']
 })
 export class ProductCardBasketComponent implements OnInit, OnChanges {
-
-  addForm: FormGroup = new FormGroup({
-    itemsSelected: new FormControl()
-  });
-
   @Input() img: string;
   @Input() stock: number;
   @Input() name: string;
@@ -33,9 +27,16 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
   @Input() numItems: string;
   @Input() description: string;
   @Input() favorite: boolean;
+  @Input() disabled: boolean;
   @Output() numItemsUpdated: EventEmitter<ItemUpdated> = new EventEmitter<
     ItemUpdated
   >();
+
+  addForm: FormGroup = new FormGroup({
+    itemsSelected: new FormControl()
+  });
+
+  stockLeft: number;
 
   constructor() {}
 
@@ -43,13 +44,31 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.numItems) {
-      this.addForm.get('itemsSelected').setValue(this.numItems);
+      const numItems = changes.numItems.currentValue;
+      this.addForm.get('itemsSelected').setValue(numItems);
+
+      if (numItems > this.stock) {
+        this.stockLeft = 0;
+      } else if (numItems < 0) {
+        this.stockLeft = this.stock;
+      } else {
+        this.stockLeft = this.stock - numItems;
+      }
     }
   }
 
-  updatedNumItems(val): void {
+  updatedNumItems(val: string): void {
+    let valueItem: number = null;
+    const isInteger = Number.isInteger(parseFloat(val));
+
+    if (isInteger) {
+      valueItem = Number(val);
+    } else {
+      this.addForm.get('itemsSelected').setValue(null);
+    }
+
     this.numItemsUpdated.emit({
-      val,
+      val: valueItem,
       error: !this.addForm.valid
     });
   }
@@ -63,7 +82,6 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
   }
 
   private modifyNumItems(num: number): void {
-
     this.addForm.get('itemsSelected').markAsDirty();
     this.addForm.get('itemsSelected').markAsTouched();
 

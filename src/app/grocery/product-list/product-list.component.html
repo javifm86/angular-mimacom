@@ -1,18 +1,20 @@
-<div *ngIf="products != null && products.length > 0; else templateEmpty" class="flex flex-wrap -mx-2 mb-8">
+<div
+  *ngIf="products != null && products.length > 0; else templateEmpty;"
+  class="flex flex-wrap -mx-2 mb-8">
   <ng-container *ngFor="let item of products">
-    <div class="w-full md:w-1/2 xl:w-1/3 px-4 mb-8">
+    <article class="w-full md:w-1/2 xl:w-1/3 px-4 mb-8">
       <app-product-card
-      [img]="item.image_url"
-      [stock]="item.stock"
-      [name]="item.productName"
-      [price]="item.price"
-      [description]="item.productDescription"
-      [inBasket]="item.inBasket"
-      [favorite]="item.favorite === 1 || item.favorite === '1'"
-      (added)="addPressed(item);"
-      (addedToFav)="addedToFav($event, item);"
+        [img]="item.image_url"
+        [stock]="item.stock"
+        [name]="item.productName"
+        [price]="item.price"
+        [description]="item.productDescription"
+        [inBasket]="item.inBasket"
+        [favorite]="item.favorite === 1 || item.favorite === '1'"
+        (added)="addPressed(item);"
+        (addedToFav)="addedToFav($event, item);"
       ></app-product-card>
-    </div>
+    </article>
   </ng-container>
 </div>
 

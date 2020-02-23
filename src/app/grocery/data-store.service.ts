@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 import { Product } from './models/product';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,7 @@ export class DataStoreService {
   KEY_BASKET = 'basket';
 
   constructor() {
-    this.basket = this.getBasketFromLocal();
-    console.warn(this.basket);
+    this.basket = [];
   }
 
   setProducts(products: Product[]): void {
@@ -43,20 +42,13 @@ export class DataStoreService {
     if (elemInBasket == null) {
       item.numItems = 1;
       this.basket.push(Object.assign({}, item));
-      sessionStorage.setItem(this.KEY_BASKET, JSON.stringify(this.basket));
       this.basketUpdatedSource.next(Object.assign({}, item));
     }
   }
 
   removeFromBasket(item: Product): void {
     this.basket = this.basket.filter(elem => elem.id !== item.id);
-    sessionStorage.setItem(this.KEY_BASKET, JSON.stringify(this.basket));
     this.basketUpdatedSource.next(Object.assign({}, item));
-  }
-
-  private getBasketFromLocal(): Product[] {
-    const basket = sessionStorage.getItem(this.KEY_BASKET);
-    return basket != null ? JSON.parse(basket) : [];
   }
 
   getBasket(): Product[] {
@@ -64,6 +56,8 @@ export class DataStoreService {
   }
 
   notifyPayment(): void {
+    this.basket = [];
+    this.basketUpdatedSource.next();
     this.paymentReceivedSource.next(true);
   }
 

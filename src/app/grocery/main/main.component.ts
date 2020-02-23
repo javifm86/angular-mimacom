@@ -11,15 +11,17 @@ import { Product } from '../models/product';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  // Control variables
   loading = true;
   error = false;
   isFavoriteList = false;
-  currentPage = 0;
   products: Product[];
 
+  // Pagination variables
   private totalProducts: number;
   lastPage: number;
   private ITEMS_PER_PAGE = 12;
+  currentPage = 0;
 
   @ViewChild('productList', { static: false })
   productListDom: ElementRef;
@@ -27,33 +29,20 @@ export class MainComponent implements OnInit {
   constructor(
     private groceryService: GroceryService,
     private dataStore: DataStoreService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadListProduct();
-    this.dataStore.paymentReceived$.subscribe((updated) => {
-      this.loadListProduct();
+
+    // Refresh current list when payment received
+    this.dataStore.paymentReceived$.subscribe(updated => {
+      this.refresh();
     });
 
+    // Refresh current product list with basket state
     this.dataStore.basketUpdated$.subscribe((product: Product) => {
       this.updateInBasketProducts();
     });
-  }
-
-  addedItem(item: Product) {
-    this.dataStore.addToBasket(Object.assign({}, item));
-    this.updateInBasketProducts();
-  }
-
-  private initPagination(): void {
-    this.totalProducts = this.dataStore.getTotalProducts();
-    this.lastPage = Math.ceil((this.totalProducts / this.ITEMS_PER_PAGE)) - 1;
-  }
-
-  loadPage(page: number): void {
-    this.currentPage = page;
-    this.getProducts();
-    this.productListDom.nativeElement.scrollTop = 0;
   }
 
   loadListProduct(): void {
@@ -66,7 +55,7 @@ export class MainComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (data: Product[]) => this.setViewData(data),
-        (error: any) => this.error = true
+        (error: any) => (this.error = true)
       );
   }
 
@@ -80,8 +69,25 @@ export class MainComponent implements OnInit {
       .pipe(finalize(() => (this.loading = false)))
       .subscribe(
         (data: Product[]) => this.setViewData(data),
-        (error: any) => this.error = true
+        (error: any) => (this.error = true)
       );
+  }
+
+  // Invoked when app-product-list component emits addedProduct event
+  addedItem(item: Product) {
+    this.dataStore.addToBasket(Object.assign({}, item));
+    this.updateInBasketProducts();
+  }
+
+  private initPagination(): void {
+    this.totalProducts = this.dataStore.getTotalProducts();
+    this.lastPage = Math.ceil(this.totalProducts / this.ITEMS_PER_PAGE) - 1;
+  }
+
+  loadPage(page: number): void {
+    this.currentPage = page;
+    this.getProducts();
+    this.productListDom.nativeElement.scrollTop = 0;
   }
 
   refresh(): void {
@@ -95,17 +101,16 @@ export class MainComponent implements OnInit {
   }
 
   private getProducts(): void {
-     this.products = this.dataStore.getProductsByPage(
-       this.currentPage,
-       this.ITEMS_PER_PAGE
-     );
-     this.updateInBasketProducts();
+    this.products = this.dataStore.getProductsByPage(
+      this.currentPage,
+      this.ITEMS_PER_PAGE
+    );
+    this.updateInBasketProducts();
   }
 
   private updateInBasketProducts(): void {
     this.products.map(
-       elem => (elem.inBasket = this.dataStore.isProductInBasket(elem.id))
-     );
+      elem => (elem.inBasket = this.dataStore.isProductInBasket(elem.id))
+    );
   }
-
 }

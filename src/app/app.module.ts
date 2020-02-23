@@ -8,9 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { GroceryModule } from './grocery/grocery.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -21,4 +19,4 @@ import { GroceryModule } from './grocery/grocery.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
