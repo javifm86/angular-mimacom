@@ -5,10 +5,10 @@
 
   <!-- Product info -->
   <div class="flex-grow">
-    <div class="font-bold text-base mb-1 text-gray-700">{{name}}</div>
+    <div class="font-bold text-base mb-1 text-gray-700 test-name">{{name}}</div>
     <div class="flex justify-between items-center mb-2">
-      <div class="text-gray-800 font-bold mb-1">{{price | currency}}</div>
-      <div>{{ stock }} in stock</div>
+      <div class="text-gray-800 font-bold mb-1 test-price">{{price | currency}}</div>
+      <div class="test-stock">{{ stock }} in stock</div>
     </div>
     <div class="flex items-center justify-between">
       <form [formGroup]="addForm">
@@ -34,7 +34,7 @@
           </button>
         </div>
       </form>
-      <div>{{ stockLeft }} left</div>
+      <div class="test-left">{{ stockLeft }} left</div>
     </div>
   </div>
 

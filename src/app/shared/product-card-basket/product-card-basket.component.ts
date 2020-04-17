@@ -44,16 +44,7 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.numItems) {
-      const numItems = changes.numItems.currentValue;
-      this.addForm.get('itemsSelected').setValue(numItems);
-
-      if (numItems > this.stock) {
-        this.stockLeft = 0;
-      } else if (numItems < 0) {
-        this.stockLeft = this.stock;
-      } else {
-        this.stockLeft = this.stock - numItems;
-      }
+      this.updateStockLeft(changes.numItems.currentValue);
     }
 
     if (changes.disable) {
@@ -71,6 +62,7 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
 
     if (isInteger) {
       valueItem = Number(val);
+      this.updateStockLeft(valueItem);
     } else {
       this.addForm.get('itemsSelected').setValue(null);
     }
@@ -98,6 +90,18 @@ export class ProductCardBasketComponent implements OnInit, OnChanges {
       const result = String(Number(currentVal) + num);
       this.addForm.get('itemsSelected').setValue(result);
       this.updatedNumItems(result);
+    }
+  }
+
+  private updateStockLeft(numItems: number) {
+    this.addForm.get('itemsSelected').setValue(numItems);
+
+    if (numItems > this.stock) {
+      this.stockLeft = 0;
+    } else if (numItems < 0) {
+      this.stockLeft = this.stock;
+    } else {
+      this.stockLeft = this.stock - numItems;
     }
   }
 }
