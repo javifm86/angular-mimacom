@@ -8,7 +8,7 @@ import { Product } from './models/product';
 })
 export class DataStoreService {
   // Observables source
-  private basketUpdatedSource = new Subject<Product>();
+  private basketUpdatedSource = new Subject<any>();
   private paymentReceivedSource = new Subject<boolean>();
 
   // Observables stream
@@ -20,6 +20,7 @@ export class DataStoreService {
   KEY_BASKET = 'basket';
 
   constructor() {
+    this.products = [];
     this.basket = [];
   }
 
@@ -42,13 +43,13 @@ export class DataStoreService {
     if (elemInBasket == null) {
       item.numItems = 1;
       this.basket.push(Object.assign({}, item));
-      this.basketUpdatedSource.next(Object.assign({}, item));
+      this.basketUpdatedSource.next();
     }
   }
 
   removeFromBasket(item: Product): void {
     this.basket = this.basket.filter(elem => elem.id !== item.id);
-    this.basketUpdatedSource.next(Object.assign({}, item));
+    this.basketUpdatedSource.next();
   }
 
   getBasket(): Product[] {

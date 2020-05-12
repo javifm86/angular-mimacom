@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.updateBasket();
 
-    this.dataStore.basketUpdated$.subscribe((product: Product) => {
+    this.dataStore.basketUpdated$.subscribe(() => {
       this.updateBasket();
     });
   }

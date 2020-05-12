@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
     });
 
     // Refresh current product list with basket state
-    this.dataStore.basketUpdated$.subscribe((product: Product) => {
+    this.dataStore.basketUpdated$.subscribe(() => {
       this.updateInBasketProducts();
     });
   }
